@@ -1,0 +1,678 @@
+<meta charset="UTF-8">
+ <html>
+ <!-- Pagina Principal -->
+<head>
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+ <script src="createjs.js"></script>
+<script type="text/javascript">
+var som1,som2,som3,som4,som5,som6,som7,som8,som9,som10,som11,som12,som13;
+var controle1,controle2,controle3,controle4,controle5,controle6,controle7,controle8,controle9,controle10,controle11,controle12,controle13;
+var play1;
+//Variavel de com o caminho e o id de cada sample
+//var sons = new createjs.LoadQueue();
+//sons.installPlugin(createjs.Sound);
+sons = [{src:"clap.wav",id:"clap"},
+  {src:"closed.wav",id:"closed"},
+  {src:"crash.wav",id:"crash"},
+  {src:"high.wav",id:"high"},
+  {src:"kick.wav",id:"kick"},
+  {src:"low.wav",id:"low"},
+  {src:"mid.wav",id:"mid"},
+  {src:"open.wav",id:"open"},
+  {src:"perc1.wav",id:"perc1"},
+  {src:"perc2.wav",id:"perc2"},
+  {src:"rim.wav",id:"rim"},
+  {src:"shake.wav",id:"shake"},
+  {src:"snare.wav",id:"snare"}
+  ]
+
+//[{src:"drum.mp3",id:"drum"},{src:"drum2.mp3",id:"drum2"},{src:"clap.mp3",id:"clap"}];
+//diretorio dos samples
+var dir = "./sounds/acoustic/";
+//Objeto que armazena e checa se os botoes estão marcados
+var itens = new Object;
+var marcador;
+marcador = false;
+var contador = 0;
+var controle;
+var posicao;
+var p2;
+var bpm = 500; //Controle de BPM
+
+//Precarregamento
+
+var xmlhttp = new XMLHttpRequest();
+//xmlhttp.open("GET",sons,false);
+//xmlhttp.send();
+
+
+function reg_sons(){
+    var queue = new createjs.LoadQueue();
+     queue.installPlugin(createjs.Sound);
+     // queue.on('complete',function(){createjs.Sound.registerSounds(sons,dir)});
+     // queue.loadFile(sons);
+     // queue.loadManifest(sons);
+     //queue.load();
+      
+    createjs.Sound.initializeDefaultPlugins();
+    
+    controle = createjs.Sound.play;
+    createjs.Sound.addEventListener("fileload", createjs.proxy(preload, this));
+    createjs.Sound.registerSounds(sons,dir);
+
+    this.load_volume = function(){
+      var def_vol = document.getElementsByClassName('volume');
+          for(var i=0;i<def_vol.length;i++){
+           def_vol[i].value = 50;
+          }
+       };
+
+  load_volume();
+  //Slider
+//  posicao = document.getElementById('ev')
+  p2 = document.getElementById("tempo_");
+ // p2.setAttribute("type","range")
+ // p2.min = contador;
+ // p2.max = "23";
+ // p2.class = "roundedone"
+  //BPM
+
+  var mtr_bpm = document.getElementById("bpm")
+  fbpm(mtr_bpm);
+  
+  //document.body.appendChild(p2);
+  
+  //p2.appendChild(posicao);
+ // document.insertBefore(posicao,p2)
+}
+
+function preload(data){
+  console.log(data);
+}
+
+
+//Muda BPM
+
+function fbpm(valor){
+      bpm = parseInt((60/(valor.value)) * 1000);
+      console.log(bpm);
+}
+
+//Play/Pause
+function mudastatus(valor){
+         marcador = true;
+          toca();
+           
+       }
+
+function toca(){
+   if(marcador == true){
+    //Objetos HTML
+     itens.caixa  = document.getElementsByClassName('botoes_b'); 
+     itens.caixa2 = document.getElementsByClassName('botoes_r');
+     itens.caixa3 = document.getElementsByClassName('botoes_d2');
+     itens.caixa4 = document.getElementsByClassName('botoes_d3');
+     itens.caixa5 = document.getElementsByClassName('botoes_d4');
+     itens.caixa6 = document.getElementsByClassName('botoes_d5');
+     itens.caixa7 = document.getElementsByClassName('botoes_d6');
+     itens.caixa8 = document.getElementsByClassName('botoes_d7');
+     itens.caixa9 = document.getElementsByClassName('botoes_d8');
+     itens.caixa10 = document.getElementsByClassName('botoes_d9');
+     itens.caixa11 = document.getElementsByClassName('botoes_d10');
+     itens.caixa12 = document.getElementsByClassName('botoes_d11');
+     itens.caixa13 = document.getElementsByClassName('botoes_d12');
+
+    if(itens.caixa[contador].checked){
+           som1 = createjs.Sound.play("kick",{volume:controle1});      
+      }
+
+    if(itens.caixa2[contador].checked){
+          som2 = createjs.Sound.play("closed",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle2});
+    
+      }
+
+    if(itens.caixa3[contador].checked){
+          som3 = createjs.Sound.play("open",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle3}); 
+     }
+
+    if(itens.caixa4[contador].checked){
+          som4 = createjs.Sound.play("snare",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle4});
+     }
+
+    if(itens.caixa5[contador].checked){
+          som5 = createjs.Sound.play("perc1",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle5});
+     }
+
+    if (itens.caixa6[contador].checked){
+          som6 = createjs.Sound.play("perc2",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle6});
+     }
+ 
+    if(itens.caixa7[contador].checked){
+          som7 = createjs.Sound.play("high",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle7});
+     }
+
+    if(itens.caixa8[contador].checked){
+          som8 = createjs.Sound.play("mid",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle8});
+    } 
+
+    if(itens.caixa9[contador].checked){
+          som9 = createjs.Sound.play("low",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle9});
+    }
+
+    if(itens.caixa10[contador].checked){
+         som10 = createjs.Sound.play("shake",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle10});
+    }
+
+    if(itens.caixa11[contador].checked){
+         som11 = createjs.Sound.play("rim",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle11});
+    }
+
+    if(itens.caixa12[contador].checked){
+         som12 = createjs.Sound.play("clap",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle12});
+    }
+     
+    if(itens.caixa13[contador].checked){
+      som13 = createjs.Sound.play("crash",{interrupt: createjs.Sound.INTERRUPT_ANY,volume:controle13});
+    }
+
+  
+  //Marcador
+  
+     console.log(contador);
+     contador++;
+     p2.value = contador;
+
+    if(contador == 24){
+          contador = 0;
+    }
+
+    if (marcador == true){
+      setTimeout(function(){toca()},bpm);
+     
+    }
+  }
+}
+
+
+ function stop(){
+      createjs.Sound.stop();
+      marcador = false;
+   }
+
+//Volume Principal
+function volume(){
+      x = document.getElementById("volume").value;
+      createjs.Sound.setVolume(x/100);
+}
+//Volume das Instancias;
+
+function vol_inst(id){
+     switch(id) {
+         case 1:
+             controle1 = document.getElementById("vol_som1").value / 100;
+             break;
+         case 2:
+             controle2 = document.getElementById("vol_som2").value / 100;
+             break;
+         case 3:
+             controle3 = document.getElementById("vol_som3").value / 100;   
+             break;   
+         case 4:
+             controle4 = document.getElementById("vol_som4").value / 100;
+             break;    
+        case 5:
+             controle5 = document.getElementById("vol_som5").value / 100;
+             break;
+        case 6:
+             controle6 = document.getElementById("vol_som6").value /100 ; 
+             break;
+        case 7:
+             controle7 = document.getElementById("vol_som7").value / 100;         
+             break;
+        case 8:
+            controle8 = document.getElementById("vol_som8").value / 100;
+            break;
+        case 9:
+            controle9 = document.getElementById("vol_som9").value /100;
+            break;
+        case 10:
+            controle10 = document.getElementById("vol_som10").value /100;
+            break;
+        case 11:
+            controle11 = document.getElementById("vol_som11").value /100;
+            break;
+        case 12:
+            controle12 = document.getElementById("vol_som12").value /100;
+            break;
+        case 13:
+            controle13 = document.getElementById("vol_som13").value /100;
+            break;   
+                           
+    }
+}
+
+function newpage(id){
+  switch(id){
+    case 1:
+      window.location.assign("house.html");
+       break;
+     
+    case 2: 
+      window.location.assign("eletro.html")
+       break  ;   
+    case 3:
+     window.location.assign("tecno.html")
+       break ;
+    case 4:
+      window.location.assign("acustico.html")
+
+}
+}
+
+//document.body.onload = reg_sons();
+//window.onload = m_player();
+</script>
+<body onload="reg_sons()">
+
+<div id="superior">
+<button name="modo1">Modo 1</button>
+
+
+<button name="modo2">Modo 2</button>
+
+</div>
+<div id="m_estilos">
+<button name="House" onclick="newpage(1);">House</button>
+<button name="Eletro" onclick="newpage(2);">Eletro</button>
+<button name="Tecno"  onclick="newpage(3);">Tecno</button>
+<button name="Acústico" onclick="newpage(4)">Acústico</button>
+</div>  
+
+<div id="tempo">
+  <input type="range" id="tempo_" min=0 max=24></input>
+</div> 
+<div id="lateral">
+</div>
+<div id="sons">
+  <div id="sample">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="checkbox"  class="botoes_b">
+   <input type="range" class="volume" id="vol_som1" min="0" max="100" onclick="vol_inst(1);">
+   <input type="number" id="bpm" min="60" max="140" value="60" onchange="fbpm(this)">
+   <button class="mixer" id="inicia" >PLAY</button>
+   
+   <script type="text/javascript">
+     //BPM
+         var mtr_bpm = document.getElementById("bpm");
+         mtr_bpm.addEventListener("change",fbpm(mtr_bpm));
+   </script>
+
+   </div>
+   <div id="sample">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="checkbox"  class="botoes_r">
+   <input type="range" id="vol_som2" class="volume" min="0" max="100" onclick="vol_inst(2);">
+   <button onClick="stop()" class="mixer">STOP</button>
+   </div>
+
+   <div id="sample">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+    <input type="checkbox"  class="botoes_d2">
+       <input type="range" id="vol_som3" class="volume" min="0" max="100" onclick="vol_inst(3);">
+  </div>
+  <div id="sample">
+   <input type="checkbox"   class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="checkbox"  class="botoes_d3">
+    <input type="range" id="vol_som4" class="volume" min="0" max="100" onclick="vol_inst(4);">
+</div>
+   <div id="sample">
+   <input type="checkbox"   class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+    <input type="checkbox"  class="botoes_d4">
+       <input type="range" id="vol_som5" class="volume" min="0" max="100" onclick="vol_inst(5);">
+   </div>
+   <div id="sample">
+   <input type="checkbox"   class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+    <input type="checkbox"  class="botoes_d5">
+       <input type="range" id="vol_som6"  class="volume" min="0" max="100" onclick="vol_inst(6);">
+   </div>
+   <div id="sample">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+    <input type="checkbox"  class="botoes_d6">
+       <input type="range" id="vol_som7" class="volume" min="0" max="100" onclick="vol_inst(7);">
+   </div>
+   <div id="sample">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+    <input type="checkbox"  class="botoes_d7">
+       <input type="range" id="vol_som8" class="volume" min="0" max="100" onclick="vol_inst(8);">
+   </div>
+
+   <div id="sample">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+    <input type="checkbox"  class="botoes_d8">
+       <input type="range" id="vol_som9" class="volume" min="0" max="100" onclick="vol_inst(9);">
+   </div>
+
+   <div id="sample">
+   <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+    <input type="checkbox"  class="botoes_d9">
+       <input type="range" id="vol_som10" class="volume" min="0" max="100" onclick="vol_inst(10);">
+   </div>
+
+   <div id="sample">
+   <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+    <input type="checkbox"  class="botoes_d10">
+       <input type="range" id="vol_som11" class="volume" min="0" max="100" onclick="vol_inst(11);">
+    </div> 
+
+    <div id="sample">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+         <input type="checkbox"  class="botoes_d11">
+          <input type="range" id="vol_som12" class="volume" min="0" max="100" onclick="vol_inst(12);">
+      </div>
+
+
+      <div id="sample">
+   <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+    <input type="checkbox"  class="botoes_d12">
+       <input type="range" id="vol_som13" class="volume" min="0" max="100" onclick="vol_inst(13);">
+      </div>  
+ </div>
+ <script type="text/javascript">
+          console.log("chamou");
+          play1 = document.getElementById('inicia');
+          play1.addEventListener('click',function(){mudastatus()});
+ </script>
+ <div id="ev">
+ <!--<input type="range" min=0 max=24 class="roundedone"-->
+ </div>
+
+ </body>
+
+</html>

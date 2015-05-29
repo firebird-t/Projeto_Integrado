@@ -1,0 +1,334 @@
+
+<meta charset="UTF-8">
+<html>
+<head></head>
+<body>
+<script src="createjs.js"></script>
+
+<script>
+
+var dir ="./sounds/modo2/";
+var instance,instance2,instance3,instance4,instance5,instance6,instance7,instance8;
+var b1,b2,b3,b4,b5,b6,b7,b8,b9,b10;
+var dir_b,dir_d,dir_g,dir_p,dir_k,dir_v,dir_t;
+
+var controle,controle1;
+
+var bass = [{src:"Artificial Emotions 1.ogg",id:"art_emo_1"},
+{src:"Artificial Emotions 2.ogg",id:"art_emo_2"},
+{src:"Artificial Emotions 3.OGG",id:"art_emo_3"},
+{src:"Artificial Emotions 4.OGG",id:"art_emo_4"},
+{src:"Artificial Emotions 5.OGG",id:"art_emo_5"},
+{src:"Artificial Emotions 6.OGG",id:"art_emo_6"},
+{src:"Artificial Emotions 7.OGG",id:"art_emo_7"},
+{src:"Melodic Bass 1.OGG",id:"meld_bass_1"},
+{src:"Melodic Bass 2.OGG",id:"meld_bass_2"},
+{src:"Melodic Bass 3.OGG",id:"meld_bass_3"},
+{src:"Melodic Bass 4.OGG",id:"meld_bass_4"},
+{src:"Melodic Bass 5.OGG",id:"meld_bass_5"},
+{src:"Melodic Bass 6.OGG",id:"meld_bass_6"},
+{src:"Melodic Bass 7.OGG",id:"meld_bass_7"},
+{src:"Smooth Bassline 1.OGG",id:"smooth_bass1"},
+{src:"Smooth Bassline 2.OGG",id:"smooth_bass2"},
+{src:"Smooth Bassline 3.OGG",id:"smooth_bass3"},
+{src:"Smooth Bassline 4.OGG",id:"smooth_bass4"},
+{src:"Smooth Bassline 5.OGG",id:"smooth_bass5"},
+{src:"Smooth Bassline 6.OGG",id:"smooth_bass6"},
+{src:"Smooth Bassline 7.OGG",id:"smooth_bass7"},
+{src:"Soulful Bass 1.OGG",id:"soul_bass1"},
+{src:"Soulful Bass 2.OGG",id:"soul_bass2"},
+{src:"Soulful Bass 3.OGG",id:"soul_bass3"},
+{src:"Soulful Bass 4.OGG",id:"soul_bass4"},
+{src:"Soulful Bass 5.OGG",id:"soul_bass5"},
+{src:"Soulful Bass 6.OGG",id:"soul_bass6"},
+{src:"Soulful Bass 7.OGG",id:"soul_bass7"}];
+var dir_b = "./sounds/modo2/ST_Valentunes/Bass/";
+
+var drum = [{src:"Intimate Kit A.OGG",id:"int_kita"},
+{src:"Intimate Kit B.OGG",id:"int_kitb"},
+{src:"Intimate Kit C.OGG",id:"int_kitc"},
+{src:"Intimate Kit D.OGG",id:"int_kitd"},
+{src:"Intimate Kit E.OGG",id:"int_kite"},
+{src:"Intimate Shaker.OGG",id:"int_shaker"},
+{src:"Lovebird Kit A.OGG",id:"lov_kit_a"},
+{src:"Lovebird Kit B.OGG",id:"lov_kit_b"},
+{src:"Lovebird Kit C.OGG",id:"lov_kit_c"},
+{src:"Slowjam Machine A.OGG",id:"slow_mach_a"},
+{src:"Slowjam Machine B.OGG",id:"slow_mach_b"},
+{src:"Slowjam Machine C.OGG",id:"slow_mach_c"},
+{src:"Slowjam Machine D.OGG",id:"slow_mach_d"},
+{src:"Slowjam Machine E.OGG",id:"slow_mach_e"},
+{src:"Slowjam Machine F.OGG",id:"slow_mach_f"},
+{src:"Treasure Kit A.OGG",id:"treas_kit_a"},
+{src:"Treasure Kit B.OGG",id:"treas_kit_b"},
+{src:"Treasure Kit C.OGG",id:"treas_kit_c"}];
+var dir_d = "./sounds/modo2/ST_Valentunes/Drums/"
+
+var guitars = [{src:"Love Crush 1.OGG",id:"love_crush1"},
+{src:"Love Crush 2.OGG",id:"love_crush2"},
+{src:"Love Crush 3.OGG",id:"love_crush3"},
+{src:"Love Crush 4.OGG",id:"love_crush4"},
+{src:"Love Crush 5.OGG",id:"love_crush5"},
+{src:"Love Crush 6.OGG",id:"love_crush6"},
+{src:"Love Crush 7.OGG",id:"love_crush7"},
+{src:"Loving Funk 1.OGG",id:"lov_funk1"},
+{src:"Loving Funk 2.OGG",id:"lov_funk2"},
+{src:"Loving Funk 3.OGG",id:"lov_funk3"},
+{src:"Loving Funk 4.OGG",id:"lov_funk4"},
+{src:"Loving Funk 5.OGG",id:"lov_funk5"},
+{src:"Loving Funk 6.OGG",id:"lov_funk6"},
+{src:"Loving Funk 7.OGG",id:"lov_funk7"},
+{src:"Sensual Strumming 1.OGG",id:"sen_str1"},
+{src:"Sensual Strumming 2.OGG",id:"sen_str2"},
+{src:"Sensual Strumming 3.OGG",id:"sen_str3"},
+{src:"Sensual Strumming 4.OGG",id:"sen_str4"},
+{src:"Sensual Strumming 5.OGG",id:"sen_str5"},
+{src:"Sensual Strumming 6.OGG",id:"sen_str6"},
+{src:"Sensual Strumming 7.OGG",id:"sen_str7"},
+{src:"Sweetheart Guitar 1.OGG",id:"swt_gtr1"},
+{src:"Sweetheart Guitar 2.OGG",id:"swt_gtr2"},
+{src:"Sweetheart Guitar 3.OGG",id:"swt_gtr3"},
+{src:"Sweetheart Guitar 4.OGG",id:"swt_gtr4"},
+{src:"Sweetheart Guitar 5.OGG",id:"swt_gtr5"},
+{src:"Sweetheart Guitar 6.OGG",id:"swt_gtr6"},
+{src:"Sweetheart Guitar 7.OGG",id:"swt_gtr7"},
+{src:"Tremolo Passion 1.OGG",id:"trem_pas1"},
+{src:"Tremolo Passion 2.OGG",id:"trem_pas2"},
+{src:"Tremolo Passion 3.OGG",id:"trem_pas3"},
+{src:"Tremolo Passion 4.OGG",id:"trem_pas4"},
+{src:"Tremolo Passion 5.OGG",id:"trem_pas5"},
+{src:"Tremolo Passion 6.OGG",id:"trem_pas6"},
+{src:"Tremolo Passion 7.OGG",id:"trem_pas7"}];
+
+var pads = [];
+var keys = [];
+var vocals = [];
+var tromps = [];
+var h_m = [];
+
+
+
+var mark = [] ;
+var ct_obj;
+
+
+
+function registrasons(){
+  createjs.Sound.initializeDefaultPlugins();
+  createjs.Sound.alternateExtensions = ["ogg","mp3"];
+  
+  controle = createjs.Sound.registerSounds(drum,dir_d);
+  controle1 = createjs.Sound.registerSounds(bass,dir_b);
+	//createjs.Sound.registerSounds(guitars,dir_g);
+  //createjs.Sound.registerSounds(pads,dir_p);
+ // createjs.Sound.registerSounds(keys,dir_k);
+ // createjs.Sound.registerSounds(vocals,dir_v);
+ // createjs.Sound.registerSounds(tromps,dir_t);
+  //createjs.Sound.registerSounds(sons,dir);
+}
+
+
+
+function events_listenners(){
+   b1 = document.getElementbyId("b1");
+    b1.addEventListener('click',function(){player(this);})
+
+   b2 = document.getElementbyId("b2");
+    b2.addEventListener('click',function(){player(this);})
+
+   b3 = document.getElementbyId("b3");
+    b3.addEventListener('click',function(){player(this);})
+  
+   b4 = document.getElementbyId("b4");
+    b4.addEventListener('click',function(){player(this);}) 
+
+   b5 = document.getElementbyId("b5");
+    b5.addEventListener('click',function(){player(this);}) 
+  
+   b6 = document.getElementbyId("b6");
+    b6.addEventListener('click',function(){player(this);})
+  
+   b7 = document.getElementbyId("b7");
+    b7.addEventListener('click',function(){player(this);})
+  
+   b8 = document.getElementbyId("b8");
+    b8.addEventListener('click',function(){player(this);})
+
+   player = document.getElementbyId("player")
+     player.addEventListener('click',function(){})
+}
+
+//Player 
+function player(obj){
+  if(obj.id == b1 & mark[0] == false){
+    mark[0] = true;
+    instance = createjs.Sound.play(,{loop:-1}) 
+  }
+  if(obj.id == b2 & mark[1] == false){
+    mark[1] = true;
+    instance2 = create.Sound.play(,{loop:-1}) 
+  }
+
+  if(obj.id == b3 & mark[2] == false){
+     mark[2] = true;
+      instance3 = createjs.Sound.play(,{loop:-1})
+  }
+
+  }
+
+//Volume
+function mudanca(valor){
+ if(valor.id == b1 & mark[0] == true){
+    instance.setVolume(0);
+    mark[0] = false;
+ }
+}
+
+//
+function slider(change){
+	var control = document.getElementbyId("range");
+	control.value = valor*8/100;
+}
+
+
+
+function sync(){
+	instance.setPositon() = 0;
+	instance2.setPositon() = 0;
+	
+}
+
+function stop(){
+
+}
+window.onload = registrasons();
+</script>
+<div id="painel">
+  <div id="div_painel">
+   <ul>
+       <button id="b1" class="player">1</button>
+       <button id="b2" class="player">2</button>
+       <button id="b3" class="player">3</button>
+       <button id="b4" class="player">4</button>
+       <button id="b5" class="player">5</button>
+       <button id="b6" class="player">6</button>
+       <button id="b7" class="player">7</button>
+       <button id="b8" class="player">8</button>
+       
+       <script>
+         ct_obj = document.getElementsByClassName('player')
+         //ct_obj.addEventListener("change",mudanca(this));
+       </script>
+
+    </ul>
+
+    <ul>
+
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+    <button>7</button>
+    <button>8</button>
+    </ul>
+</div>
+
+<div id="ranges">
+     <button id="player">Reproduzir</button>
+    <input type="range" id="range" min="0" max=100>
+</div>
+
+<style>
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 30%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 30%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
+}
+</style>
+</body>
+</html>
